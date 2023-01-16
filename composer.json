@@ -1,45 +1,122 @@
 {
-    "name": "drupal/recommended-project",
-    "description": "Project template for Drupal 9 projects with a relocated document root",
+    "name": "opigno/opigno-composer",
+    "description": "Opigno LMS",
     "type": "project",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.drupal.org/project/drupal",
-    "support": {
-        "docs": "https://www.drupal.org/docs/user_guide/en/index.html",
-        "chat": "https://www.drupal.org/node/314178"
-    },
-    "repositories": [
-        {
+    "authors": [],
+    "repositories": {
+        "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        "enyo/dropzone": {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "v5.5.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/dropzone/dropzone/archive/refs/tags/v5.5.0.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "mozilla/pdf.js": {
+            "type": "package",
+            "package": {
+                "name": "mozilla/pdf.js",
+                "version": "v2.4.456",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/mozilla/pdf.js/releases/download/v2.4.456/pdfjs-2.4.456-es5-dist.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "kenwheeler/slick": {
+            "type": "package",
+            "package": {
+                "name": "kenwheeler/slick",
+                "version": "1.8.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/kenwheeler/slick/archive/v1.8.1.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "furf/jquery-ui-touch-punch": {
+            "type": "package",
+            "package": {
+                "name": "furf/jquery-ui-touch-punch",
+                "version": "master",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/furf/jquery-ui-touch-punch/archive/refs/heads/master.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "almende/vis": {
+            "type": "package",
+            "package": {
+                "name": "almende/vis",
+                "version": "v4.21.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/almende/vis/archive/refs/tags/v4.21.0.zip",
+                    "type": "zip"
+                }
+            }
         }
-    ],
+    },
     "require": {
-        "composer/installers": "^1.9",
-        "drupal/core-composer-scaffold": "^9",
-        "drupal/core-project-message": "^9",
-        "drupal/core-recommended": "^9",
-        "drush/drush": "^10.3"
+        "wikimedia/composer-merge-plugin": "2.0",
+        "composer/installers": "*",
+        "cweagans/composer-patches": "^1.7",
+        "drupal/core-composer-scaffold": "^9.4",
+        "opigno/opigno_lms": "~3.0.9",
+        "drupal/core-recommended": "^9.4",
+        "drupal/core-project-message": "^9.4",
+        "drupal/commerce": "^2.27",
+        "drupal/commerce_stripe": "^1.0@RC",
+        "drupal/opigno_commerce": "^3.0"
+    },
+    "require-dev": {
+        "drush/drush": "^11.4",
+        "drupal/console": "~1.0",
+        "drupal/core-dev": "^9.4"
+    },
+    "replace": {
+        "h5p/h5p-core": "*",
+        "h5p/h5p-editor": "*"
+    },
+    "config": {
+        "sort-packages": false,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/core-composer-scaffold": true,
+            "wikimedia/composer-merge-plugin": true,
+            "drupal/console-extend-plugin": true,
+            "topfloor/composer-cleanup-vcs-dirs": true,
+            "drupal/core-project-message": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "conflict": {
         "drupal/drupal": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/installers": true,
-            "drupal/core-composer-scaffold": true,
-            "drupal/core-project-message": true
-        }
-    },
     "extra": {
-        "drupal-scaffold": {
-            "locations": {
-                "web-root": "web/"
-            }
-        },
         "installer-paths": {
             "web/core": [
                 "type:drupal-core"
@@ -56,36 +133,22 @@
             "web/themes/contrib/{$name}": [
                 "type:drupal-theme"
             ],
-            "drush/Commands/contrib/{$name}": [
+            "web/libraries/ckeditor": [
+                "type:drupal-library-ckeditor"
+            ],
+            "drush/Commands/{$name}": [
                 "type:drupal-drush"
-            ],
-            "web/modules/custom/{$name}": [
-                "type:drupal-custom-module"
-            ],
-            "web/themes/custom/{$name}": [
-                "type:drupal-custom-theme"
             ]
         },
-        "drupal-core-project-message": {
-            "include-keys": [
-                "homepage",
-                "support"
-            ],
-            "post-create-project-cmd-message": [
-                "<bg=blue;fg=white>                                                         </>",
-                "<bg=blue;fg=white>  Congratulations, you’ve installed the Drupal codebase  </>",
-                "<bg=blue;fg=white>  from the drupal/recommended-project template!          </>",
-                "<bg=blue;fg=white>                                                         </>",
-                "",
-                "<bg=yellow;fg=black>Next steps</>:",
-                "  * Install the site: https://www.drupal.org/docs/8/install",
-                "  * Read the user guide: https://www.drupal.org/docs/user_guide/en/index.html",
-                "  * Get support: https://www.drupal.org/support",
-                "  * Get involved with the Drupal community:",
-                "      https://www.drupal.org/getting-involved",
-                "  * Remove the plugin that prints this message:",
-                "      composer remove drupal/core-project-message"
-            ]
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "web/"
+            }
+        },
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": false,
+        "patchLevel": {
+            "drupal/core": "-p2"
         }
     }
 }
